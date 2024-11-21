@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo de JavaScript</title>
+    <style>
+        .highlight {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="titulo">Bem-vindo ao JavaScript</h1>
+    <p id="paragrafo">Interagindo com JavaScript é divertido!</p>
+
+    <!-- Botões para demonstrar ações -->
+    <button id="btn-console">Exibir Console</button>
+    <button id="btn-calculo">Fazer Cálculo</button>
+    <button id="btn-classe">Adicionar/Remover Classe</button>
+
+    <script>
+        console.log("Bem-vindo ao console do navegador!");
+        console.log("Você pode usar o console para debugar e testar o código.");
+
+        const a = 10;
+        const b = 5;
+        const resultado = a + b;
+        console.log("Soma de a + b:", resultado);
+
+        function somar(num1, num2) {
+            console.log(`Somando ${num1} e ${num2}`);
+            return num1 + num2;
+        }
+
+        const soma = somar(3, 7);
+        console.log("Resultado da função somar:", soma);
+
+        const aluno = {
+            nome: "Gabriel",
+            idade: 30,
+            curso: "Programação",
+            apresentar: function() {
+                console.log(`Meu nome é ${this.nome}, tenho ${this.idade} anos e estudo ${this.curso}.`);
+            }
+        };
+
+        console.log("Objeto aluno:");
+        console.log(aluno);
+        aluno.apresentar();
+
+        const paragrafo = document.querySelector("#paragrafo");
+        console.log("Texto original do parágrafo:", paragrafo.innerText);
+
+        paragrafo.innerText = "Agora o texto foi alterado com JavaScript!";
+
+        document.querySelector("#btn-console").addEventListener("click", () => {
+            console.log("Botão 'Exibir Console' foi clicado!");
+        });
+
+        document.querySelector("#btn-calculo").addEventListener("click", () => {
+            const calculo = somar(15, 20);
+            alert(`O resultado da soma é: ${calculo}`);
+        });
+
+        document.querySelector("#btn-classe").addEventListener("click", () => {
+            const titulo = document.querySelector("#titulo");
+            if (titulo.classList.contains("highlight")) {
+                titulo.classList.remove("highlight");
+                alert("Classe 'highlight' removida!");
+            } else {
+                titulo.classList.add("highlight");
+                alert("Classe 'highlight' adicionada!");
+            }
+        });
+    </script>
+</body>
+</html>
