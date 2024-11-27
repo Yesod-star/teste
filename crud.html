@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple CRUD</title>
+    <style>
+        /* Basic styling for the CRUD app */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        form input {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        form button {
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        li button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        li button:hover {
+            background-color: #e53935;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Simple CRUD Application</h1>
+
+        <form id="crudForm">
+            <input type="text" id="name" placeholder="Enter name" required>
+            <button type="submit">Add</button>
+        </form>
+
+        <ul id="dataList"></ul>
+
+    </div>
+
+    <script>
+    // Check if there is data in local storage and load it into the app
+    window.onload = function() {
+        loadData();
+    };
+
+    // Add data to local storage and update the list
+    function addData(name) {
+        let dataList = getDataFromStorage();
+        dataList.push(name);
+        localStorage.setItem('data', JSON.stringify(dataList));
+        loadData();
+    }
+
+    // Retrieve data from local storage
+    function getDataFromStorage() {
+        let data = localStorage.getItem('data');
+        if (data) {
+            return JSON.parse(data);
+        } else {
+            return [];
+        }
+    }
+
+    // Update the list displayed on the webpage
+    function loadData() {
+        const list = document.getElementById('dataList');
+        list.innerHTML = ''; // Clear current list
+        const data = getDataFromStorage();
+
+        data.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span>${item}</span>
+                <button onclick="deleteData(${index})">Delete</button>
+            `;
+            list.appendChild(li);
+        });
+    }
+
+    // Delete a data entry from the list and update local storage
+    function deleteData(index) {
+        let dataList = getDataFromStorage();
+        dataList.splice(index, 1); // Remove the item at the specified index
+        localStorage.setItem('data', JSON.stringify(dataList));
+        loadData();
+    }
+
+    // Handle form submission
+    document.getElementById('crudForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent page refresh
+        const name = document.getElementById('name').value.trim();
+        if (name) {
+            addData(name);
+            document.getElementById('name').value = ''; // Clear input field
+        }
+    });
+    
+    </script>
+</body>
+</html>
